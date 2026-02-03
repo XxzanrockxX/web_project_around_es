@@ -5,6 +5,7 @@ const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
+const editForm = document.querySelector('.popup__form');
 
 function openModal(modal) {
   console.log("intentando abrir el modal");
@@ -27,11 +28,20 @@ function handleOpenEditModal() {
   openModal(editPopup);
 }
 
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+  profileTitle.textContent = nameInput.value;
+  profileDescription.textContent = jobInput.value;
+  closeModal(editPopup);
+}
+
 editButton.addEventListener('click', handleOpenEditModal);
 
 closeButton.addEventListener('click', () => {
   closeModal(editPopup);
 })
+
+editForm.addEventListener('submit', handleProfileFormSubmit);
 
 let initialCards = [
   {
