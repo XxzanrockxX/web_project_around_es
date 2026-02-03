@@ -87,7 +87,7 @@
   line-height: 30px;
 }
 
-.popup_is-opened {
+.popup.popup_is-opened {
   display: flex;
 }
 

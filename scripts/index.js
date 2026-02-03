@@ -1,3 +1,38 @@
+const editButton = document.querySelector('.profile__edit-button');
+const editPopup = document.querySelector('#edit-popup');
+const closeButton = editPopup.querySelector('.popup__close');
+const profileTitle = document.querySelector('.profile__title');
+const profileDescription = document.querySelector('.profile__description');
+const nameInput = document.querySelector('.popup__input_type_name');
+const jobInput = document.querySelector('.popup__input_type_description');
+
+function openModal(modal) {
+  console.log("intentando abrir el modal");
+  modal.classList.add('popup_is-opened');
+  console.log("clase añadida . ves el modal ?");
+}
+
+function closeModal(modal) {
+  console.log("cerrando el modal ...");
+  modal.classList.remove('popup_is-opened');
+}
+
+function fillProfileForm() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileDescription.textContent;
+}
+
+function handleOpenEditModal() {
+  fillProfileForm();
+  openModal(editPopup);
+}
+
+editButton.addEventListener('click', handleOpenEditModal);
+
+closeButton.addEventListener('click', () => {
+  closeModal(editPopup);
+})
+
 let initialCards = [
   {
     name: "Valle de Yosemite",
