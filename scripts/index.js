@@ -87,15 +87,22 @@ function getCardElement(data) {
 
   const cardImage = cardElement.querySelector('.card__image');
   const cardTitle = cardElement.querySelector('.card__title');
-
   const likeButton = cardElement.querySelector('.card__like-button');
-  likeButton.addEventListener('click', () => {
-    likeButton.classList.toggle('card__like-button_active');
-  });
+  const deleteButton = cardElement.querySelector('.card__delete-button');
   
   cardTitle.textContent = data.name || "sin título";
   cardImage.src = data.link || "./images/placeholder.jpg";
   cardImage.alt = data.name || "Imagen sin título";
+
+  likeButton.addEventListener('click', () => {
+    likeButton.classList.toggle('card__like-button_is-active');
+  });
+
+  deleteButton.addEventListener('click', () => {
+    cardElement.remove();
+  });
+
+  
   return cardElement;
 }
 
