@@ -75,6 +75,26 @@ let initialCards = [
   },
 ];
 
-initialCards.forEach((element) => {
-  console.log(element.name);
+function getCardElement(data) {
+  const cardTemplate = document.querySelector('#card-template').content;
+  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+
+  const cardImage = cardElement.querySelector('.card__image');
+  const cardTitle = cardElement.querySelector('.card__title');
+
+  cardTitle.textContent = data.name || "sin título";
+  cardImage.src = data.link || "./images/placeholder.jpg";
+  cardImage.alt = data.name || "Imagen sin título";
+  return cardElement;
+};
+
+function renderCard(data, container) {
+  const cardElement = getCardElement(data);
+  container.prepend(cardElement);
+};
+
+const cardsContainer = document.querySelector('.cards__list'); 
+
+initialCards.forEach((item) => {
+  renderCard(item, cardsContainer);
 });
