@@ -12,6 +12,10 @@ const closeAddCardButton = addCardPopup.querySelector('.popup__close');
 const addCardForm = document.querySelector('#new-card-form');
 const cardTitleInput = addCardForm.querySelector('.popup__input_type_card-title');
 const cardLinkInput = addCardForm.querySelector('.popup__input_type_url');
+const imagePopup = document.querySelector('#image-popup');
+const popupImage = imagePopup.querySelector('.popup__image');
+const popupCaption = imagePopup.querySelector('.popup__caption');
+const closeImagePopupButton = imagePopup.querySelector('.popup__close');
 
 function openModal(modal) {
   console.log("intentando abrir el modal");
@@ -102,7 +106,14 @@ function getCardElement(data) {
     cardElement.remove();
   });
 
-  
+    cardImage.addEventListener('click', () => {
+    popupImage.src = data.link; // Le pasamos la URL de la imagen
+    popupImage.alt = data.name; // Le pasamos el texto alternativo
+    popupCaption.textContent = data.name; // Ponemos el título debajo de la foto
+    openModal(imagePopup);
+  });
+
+
   return cardElement;
 }
 
@@ -141,3 +152,8 @@ closeAddCardButton.addEventListener('click', () => {
 });
 
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
+
+  closeImagePopupButton.addEventListener('click', () => {
+  closeModal(imagePopup);
+});
+  
