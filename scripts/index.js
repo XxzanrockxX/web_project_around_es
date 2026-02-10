@@ -5,11 +5,11 @@ const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
-const editForm = document.querySelector('.popup__form');
+const editForm = document.querySelector('#edit-profile-form');
 const addCardButton = document.querySelector('.profile__add-button');
-const addCardPopup = document.querySelector('#add-card-popup');
+const addCardPopup = document.querySelector('#new-card-popup'); 
 const closeAddCardButton = addCardPopup.querySelector('.popup__close');
-const addCardForm = addCardPopup.querySelector('.popup__form');
+const addCardForm = document.querySelector('#new-card-form');
 const cardTitleInput = addCardForm.querySelector('.popup__input_type_card-title');
 const cardLinkInput = addCardForm.querySelector('.popup__input_type_url');
 
