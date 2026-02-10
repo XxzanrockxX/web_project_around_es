@@ -6,6 +6,12 @@ const profileDescription = document.querySelector('.profile__description');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
 const editForm = document.querySelector('.popup__form');
+const addCardButton = document.querySelector('.profile__add-button');
+const addCardPopup = document.querySelector('#add-card-popup');
+const closeAddCardButton = addCardPopup.querySelector('.popup__close');
+const addCardForm = addCardPopup.querySelector('.popup__form');
+const cardTitleInput = addCardForm.querySelector('.popup__input_type_card-title');
+const cardLinkInput = addCardForm.querySelector('.popup__input_type_url');
 
 function openModal(modal) {
   console.log("intentando abrir el modal");
@@ -86,12 +92,23 @@ function getCardElement(data) {
   cardImage.src = data.link || "./images/placeholder.jpg";
   cardImage.alt = data.name || "Imagen sin título";
   return cardElement;
-};
+}
 
 function renderCard(data, container) {
   const cardElement = getCardElement(data);
   container.prepend(cardElement);
-};
+}
+
+function handleAddCardFormSubmit(evt) {
+  evt.preventDefault();
+
+  const newCardData = {
+    name: cardTitleInput.value,
+    link: cardLinkInput.value,
+  };
+  renderCard(newCardData, cardsContainer);
+  addCardForm.reset();
+}
 
 const cardsContainer = document.querySelector('.cards__list'); 
 
