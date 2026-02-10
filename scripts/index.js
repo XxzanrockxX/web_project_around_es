@@ -107,7 +107,11 @@ function handleAddCardFormSubmit(evt) {
     link: cardLinkInput.value,
   };
   renderCard(newCardData, cardsContainer);
+
+  closeModal(addCardPopup);
+  
   addCardForm.reset();
+
 }
 
 const cardsContainer = document.querySelector('.cards__list'); 
@@ -115,3 +119,13 @@ const cardsContainer = document.querySelector('.cards__list');
 initialCards.forEach((item) => {
   renderCard(item, cardsContainer);
 });
+
+addCardButton.addEventListener('click', () => {
+  openModal(addCardPopup);
+});
+
+closeAddCardButton.addEventListener('click', () => {
+  closeModal(addCardPopup);
+});
+
+addCardForm.addEventListener('submit', handleAddCardFormSubmit);
