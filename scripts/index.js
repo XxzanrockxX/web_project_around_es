@@ -1,6 +1,6 @@
 const editButton = document.querySelector('.profile__edit-button');
 const editPopup = document.querySelector('#edit-popup');
-const closeButton = editPopup.querySelector('.popup__close');
+
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 const nameInput = document.querySelector('.popup__input_type_name');
@@ -8,7 +8,7 @@ const jobInput = document.querySelector('.popup__input_type_description');
 const editForm = document.querySelector('#edit-profile-form');
 const addCardButton = document.querySelector('.profile__add-button');
 const addCardPopup = document.querySelector('#new-card-popup'); 
-const closeAddCardButton = addCardPopup.querySelector('.popup__close');
+
 const addCardForm = document.querySelector('#new-card-form');
 const cardTitleInput = addCardForm.querySelector('.popup__input_type_card-title');
 const cardLinkInput = addCardForm.querySelector('.popup__input_type_url');
@@ -17,15 +17,21 @@ const popupImage = imagePopup.querySelector('.popup__image');
 const popupCaption = imagePopup.querySelector('.popup__caption');
 const closeImagePopupButton = imagePopup.querySelector('.popup__close');
 
+function handleCloseClick(evt) {
+  const popup = evt.target.closest('.popup');
+  closeModal(popup);  
+}
+
 function openModal(modal) {
-  console.log("intentando abrir el modal");
   modal.classList.add('popup_is-opened');
-  console.log("clase añadida . ves el modal ?");
+  const closeBtn = modal.querySelector('.popup__close');
+  closeBtn.addEventListener('click', handleCloseClick);
 }
 
 function closeModal(modal) {
-  console.log("cerrando el modal ...");
   modal.classList.remove('popup_is-opened');
+  const closeBtn = modal.querySelector('.popup__close');
+  closeBtn.removeEventListener('click', handleCloseClick);
 }
 
 function fillProfileForm() {
@@ -47,9 +53,6 @@ function handleProfileFormSubmit(evt) {
 
 editButton.addEventListener('click', handleOpenEditModal);
 
-closeButton.addEventListener('click', () => {
-  closeModal(editPopup);
-})
 
 editForm.addEventListener('submit', handleProfileFormSubmit);
 
@@ -147,13 +150,8 @@ addCardButton.addEventListener('click', () => {
   openModal(addCardPopup);
 });
 
-closeAddCardButton.addEventListener('click', () => {
-  closeModal(addCardPopup);
-});
 
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
-  closeImagePopupButton.addEventListener('click', () => {
-  closeModal(imagePopup);
-});
+ 
   
