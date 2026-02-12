@@ -1,6 +1,6 @@
 const editButton = document.querySelector('.profile__edit-button');
 const editPopup = document.querySelector('#edit-popup');
-
+const cardsContainer = document.querySelector('.cards__list'); 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 const nameInput = document.querySelector('.popup__input_type_name');
@@ -8,7 +8,6 @@ const jobInput = document.querySelector('.popup__input_type_description');
 const editForm = document.querySelector('#edit-profile-form');
 const addCardButton = document.querySelector('.profile__add-button');
 const addCardPopup = document.querySelector('#new-card-popup'); 
-
 const addCardForm = document.querySelector('#new-card-form');
 const cardTitleInput = addCardForm.querySelector('.popup__input_type_card-title');
 const cardLinkInput = addCardForm.querySelector('.popup__input_type_url');
@@ -17,46 +16,7 @@ const popupImage = imagePopup.querySelector('.popup__image');
 const popupCaption = imagePopup.querySelector('.popup__caption');
 const closeImagePopupButton = imagePopup.querySelector('.popup__close');
 
-function handleCloseClick(evt) {
-  const popup = evt.target.closest('.popup');
-  closeModal(popup);  
-}
-
-function openModal(modal) {
-  modal.classList.add('popup_is-opened');
-  const closeBtn = modal.querySelector('.popup__close');
-  closeBtn.addEventListener('click', handleCloseClick);
-}
-
-function closeModal(modal) {
-  modal.classList.remove('popup_is-opened');
-  const closeBtn = modal.querySelector('.popup__close');
-  closeBtn.removeEventListener('click', handleCloseClick);
-}
-
-function fillProfileForm() {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileDescription.textContent;
-}
-
-function handleOpenEditModal() {
-  fillProfileForm();
-  openModal(editPopup);
-}
-
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  profileTitle.textContent = nameInput.value;
-  profileDescription.textContent = jobInput.value;
-  closeModal(editPopup);
-}
-
-editButton.addEventListener('click', handleOpenEditModal);
-
-
-editForm.addEventListener('submit', handleProfileFormSubmit);
-
-let initialCards = [
+const  initialCards = [
   {
     name: "Valle de Yosemite",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
@@ -88,6 +48,76 @@ let initialCards = [
   },
 ];
 
+/**
+ * Maneja el clic en el botón de cierre del modal y cierra el modal correspondiente.
+ * @function handleCloseClick
+ * @param {Event} evt - El evento de clic
+ */
+function handleCloseClick(evt) {
+  const popup = evt.target.closest('.popup');
+  closeModal(popup);  
+}
+
+/**
+ * Abre un modal agregando la clase de apertura y el event listener al botón de cierre.
+ * @function openModal
+ * @param {HTMLElement} modal - El elemento modal a abrir
+ */
+function openModal(modal) {
+  modal.classList.add('popup_is-opened');
+  const closeBtn = modal.querySelector('.popup__close');
+  closeBtn.addEventListener('click', handleCloseClick);
+}
+
+/**
+ * Cierra un modal eliminando la clase de apertura y el event listener del botón de cierre.
+ * @function closeModal
+ * @param {HTMLElement} modal - El elemento modal a cerrar
+ */
+function closeModal(modal) {
+  modal.classList.remove('popup_is-opened');
+  const closeBtn = modal.querySelector('.popup__close');
+  closeBtn.removeEventListener('click', handleCloseClick);
+}
+
+/**
+ * Rellena el formulario de edición de perfil con los datos actuales del perfil.
+ * @function fillProfileForm
+ */
+function fillProfileForm() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileDescription.textContent;
+}
+
+/**
+ * Maneja la apertura del modal de edición de perfil, rellenando el formulario con los datos actuales.
+ * @function handleOpenEditModal
+ */
+function handleOpenEditModal() {
+  fillProfileForm();
+  openModal(editPopup);
+}
+
+/**
+ * Maneja el envío del formulario de edición de perfil.
+ * @function handleProfileFormSubmit
+ * @param {Event} evt - El evento de envío del formulario
+ */
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+  profileTitle.textContent = nameInput.value;
+  profileDescription.textContent = jobInput.value;
+  closeModal(editPopup);
+}
+
+/**
+ * Crea un nuevo elemento de tarjeta a partir de los datos proporcionados.
+ * @function getCardElement
+ * @param {Object} data - Los datos de la tarjeta
+ * @param {string} data.name - El nombre/título de la tarjeta
+ * @param {string} data.link - La URL de la imagen de la tarjeta
+ * @returns {HTMLElement} El elemento de tarjeta creado
+ */
 function getCardElement(data) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
@@ -110,9 +140,9 @@ function getCardElement(data) {
   });
 
     cardImage.addEventListener('click', () => {
-    popupImage.src = data.link; // Le pasamos la URL de la imagen
-    popupImage.alt = data.name; // Le pasamos el texto alternativo
-    popupCaption.textContent = data.name; // Ponemos el título debajo de la foto
+    popupImage.src = data.link; 
+    popupImage.alt = data.name; 
+    popupCaption.textContent = data.name;
     openModal(imagePopup);
   });
 
@@ -120,11 +150,22 @@ function getCardElement(data) {
   return cardElement;
 }
 
+/**
+ * Renderiza una tarjeta agregándola al contenedor especificado.
+ * @function renderCard
+ * @param {Object} data - Los datos de la tarjeta
+ * @param {HTMLElement} container - El elemento contenedor donde se agregará la tarjeta
+ */
 function renderCard(data, container) {
   const cardElement = getCardElement(data);
   container.prepend(cardElement);
 }
 
+/**
+ * Maneja el envío del formulario para agregar una nueva tarjeta.
+ * @function handleAddCardFormSubmit
+ * @param {Event} evt - El evento de envío del formulario
+ */
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
 
@@ -140,18 +181,20 @@ function handleAddCardFormSubmit(evt) {
 
 }
 
-const cardsContainer = document.querySelector('.cards__list'); 
-
 initialCards.forEach((item) => {
   renderCard(item, cardsContainer);
 });
 
+
 addCardButton.addEventListener('click', () => {
   openModal(addCardPopup);
 });
-
-
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
+editButton.addEventListener('click', handleOpenEditModal);
+editForm.addEventListener('submit', handleProfileFormSubmit);
+
+
+
 
  
   
