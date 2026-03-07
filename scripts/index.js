@@ -1,3 +1,4 @@
+/* === DOM ELEMENTS === */
 const editButton = document.querySelector('.profile__edit-button');
 const editPopup = document.querySelector('#edit-popup');
 const cardsContainer = document.querySelector('.cards__list'); 
@@ -16,6 +17,7 @@ const popupImage = imagePopup.querySelector('.popup__image');
 const popupCaption = imagePopup.querySelector('.popup__caption');
 const closeImagePopupButton = imagePopup.querySelector('.popup__close');
 
+/* Initial card data for rendering */
 const  initialCards = [
   {
     name: "Valle de Yosemite",
@@ -273,11 +275,13 @@ function handleAddCardFormSubmit(evt) {
 
 }
 
+/* Render default cards and attach global event listeners */
 initialCards.forEach((item) => {
   renderCard(item, cardsContainer);
 });
 
 
+// open add-card popup when '+' button clicked
 addCardButton.addEventListener('click', () => {
   addCardForm.reset();
   
