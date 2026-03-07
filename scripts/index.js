@@ -3,10 +3,10 @@ const editPopup = document.querySelector('#edit-popup');
 const cardsContainer = document.querySelector('.cards__list'); 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
-const nameInput = document.querySelector('.popup__input_type_name');
-const jobInput = document.querySelector('.popup__input_type_description');
 const editForm = document.querySelector('#edit-profile-form');
 const addCardButton = document.querySelector('.profile__add-button');
+const nameInput = editForm.querySelector('.popup__input_type_name');
+const jobInput = editForm.querySelector('.popup__input_type_description');
 const addCardPopup = document.querySelector('#new-card-popup'); 
 const addCardForm = document.querySelector('#new-card-form');
 const cardTitleInput = addCardForm.querySelector('.popup__input_type_card-title');
@@ -79,6 +79,17 @@ function closeModal(modal) {
   const closeBtn = modal.querySelector('.popup__close');
   closeBtn.removeEventListener('click', handleCloseClick);
 }
+
+function handleEscClose(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    if (openedPopup) {
+      closeModal(openedPopup);
+    }
+  }
+}
+
+document.addEventListener('keydown', handleEscClose);
 
 /**
  * Rellena el formulario de edición de perfil con los datos actuales del perfil.
@@ -256,6 +267,10 @@ function handleAddCardFormSubmit(evt) {
   
   addCardForm.reset();
 
+  const submitButton = addCardForm.querySelector('.popup__button');
+  submitButton.classList.add('popup__button_disabled');
+  submitButton.disabled = true;
+
 }
 
 initialCards.forEach((item) => {
@@ -285,7 +300,17 @@ editForm.addEventListener('submit', handleProfileFormSubmit);
 setEventListenersForValidation(editForm);
 setEventListenersForValidation(addCardForm);
 
-
+const popups = document.querySelectorAll('.popup');
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_is-opened')) {
+      closeModal(popup);
+    }
+    if(evt.target.classList.contains('popup__close')) {
+      closeModal(popup);
+    }
+  });
+});
 
 
  
