@@ -135,9 +135,26 @@ const hideInputError = (formElement, inputElement) => {
 }
 
 const checkInputValidity = (formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
-  } else {
+  // 1. Si el campo está vacío (Para todos los campos)
+  if (inputElement.validity.valueMissing) {
+    showInputError(formElement, inputElement, "Completa este campo");
+  } 
+  // 2. Si el texto es muy corto (Para Nombre y Título)
+  else if (inputElement.validity.tooShort) {
+    const min = inputElement.minLength;
+    const actual = inputElement.value.length;
+    showInputError(
+      formElement, 
+      inputElement, 
+      `Por favor, aumenta la longitud de este texto a ${min} caracteres o más (actualmente estás utilizando ${actual} caracteres).`
+    );
+  }
+  // 3. Si el formato no es una URL (Solo para el campo Link)
+  else if (inputElement.validity.typeMismatch) {
+    showInputError(formElement, inputElement, "Ingresa una URL");
+  } 
+  // 4. Si todo está correcto
+  else {
     hideInputError(formElement, inputElement);
   }
 };
@@ -187,9 +204,9 @@ function getCardElement(data) {
   const likeButton = cardElement.querySelector('.card__like-button');
   const deleteButton = cardElement.querySelector('.card__delete-button');
   
-  cardTitle.textContent = data.name || "sin título";
-  cardImage.src = data.link || "./images/placeholder.jpg";
-  cardImage.alt = data.name || "Imagen sin título";
+  cardTitle.textContent = data.name
+  cardImage.src = data.link
+  cardImage.alt = data.name
 
   likeButton.addEventListener('click', () => {
     likeButton.classList.toggle('card__like-button_is-active');
@@ -247,8 +264,20 @@ initialCards.forEach((item) => {
 
 
 addCardButton.addEventListener('click', () => {
+  addCardForm.reset();
+  
+  const inputList = Array.from(addCardForm.querySelectorAll('.popup__input'));
+  const buttonElement = addCardForm.querySelector('.popup__button');
+
+  inputList.forEach((inputElement) => {
+    hideInputError(addCardForm, inputElement);
+  });
+
+  toggleButtonState(inputList, buttonElement);
+
   openModal(addCardPopup);
 });
+
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
 editButton.addEventListener('click', handleOpenEditModal);
 editForm.addEventListener('submit', handleProfileFormSubmit);
