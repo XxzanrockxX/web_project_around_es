@@ -25,6 +25,8 @@ class Card {
             this._handleOpenCardPreview();
         });
 
+    }
+
         generateCard() {
             this._element = this._getTemplate();
             this._setEventListeners();
@@ -35,6 +37,5 @@ class Card {
             this._element.querySelector(".card__title").textContent = this._name;
 
             return this._element;
-    }
         }
     }
