@@ -1,3 +1,5 @@
+import { openModal } from './utils.js';
+
 export default class Card {
     constructor(data, cardSelector) {
         this._name = data.name;
@@ -12,6 +14,27 @@ export default class Card {
             .cloneNode(true);
         
         return cardElement;
+    }
+
+    _handleLikeIcon() {
+        this._element.querySelector(".card__like-button").classList.toggle("card__like-button_active");
+    }
+
+    _handleDeleteIcon() {
+        this._element.remove();
+        this._element = null;
+    }
+
+    _handleOpenCardPreview() {
+        const imagePopup = document.querySelector("#image-popup");
+        const popupImage = imagePopup.querySelector('.popup__image');
+        const popupCaption = imagePopup.querySelector('.popup__caption');
+
+        popupImage.src = this._link;
+        popupImage.alt = this._name;
+        popupCaption.textContent = this._name;
+        
+        openModal(imagePopup);
     }
 
     _setEventListeners() {
