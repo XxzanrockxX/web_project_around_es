@@ -66,3 +66,37 @@ addCardButton.addEventListener("click",() => {
   addCardForm.reset();
   openModal(addCardPopup);
 });
+
+/** === FORM SUBMISSION HANDLERS === */
+editForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+    profileTitle.textContent = nameInput.value;
+    profileDescription.textContent = jobInput.value;
+    closeModal(editPopup);
+});
+
+addCardForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+    const newCardData = {
+        name: cardTitleInput.value,
+        link: cardLinkInput.value
+    };
+    const newCard = new Card(newCardData, '#card-template');
+    const cardElement = newCard.generateCard();
+    cardsContainer.prepend(cardElement);
+    closeModal(addCardPopup);
+
+    addCardForm.reset();
+
+    addCardFormValidator.resetValidation();
+});
+
+/** === close popup by clicking on overlay or close button === */
+const popups = document.querySelectorAll('.popup');
+popups.forEach((popup) => {
+    popup.addEventListener("mousedown", (evt) => {
+        if (evt.target.classList.contains("popup_opened") || evt.target.classList.contains("popup__close")) {
+            closeModal(popup);
+        }
+    });
+});   
