@@ -1,4 +1,4 @@
-import Card from './Card.js';
+import Card from './card.js';
 import FormValidator from './FormValidator.js';
 import { openModal, closeModal } from './utils.js';
 
@@ -95,7 +95,7 @@ addCardForm.addEventListener("submit", (evt) => {
 const popups = document.querySelectorAll('.popup');
 popups.forEach((popup) => {
     popup.addEventListener("mousedown", (evt) => {
-        if (evt.target.classList.contains("popup_opened") || evt.target.classList.contains("popup__close")) {
+        if (evt.target.classList.contains("popup_is-opened") || evt.target.classList.contains("popup__close")) {
             closeModal(popup);
         }
     });
