@@ -1,0 +1,21 @@
+{
+  "name": "web_project_around_es",
+  "version": "1.0.0",
+  "description": "Una aplicación web interactiva que permite a los usuarios explorar y compartir lugares icónicos de los Estados Unidos. Los usuarios pueden editar su perfil, agregar nuevas ubicaciones con imágenes, marcar sus lugares favoritos y ver detalles de las imágenes en una galería emergente.",
+  "homepage": "https://github.com/XxzanrockxX/web_project_around_es#readme",
+  "bugs": {
+    "url": "https://github.com/XxzanrockxX/web_project_around_es/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XxzanrockxX/web_project_around_es.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": []
+}
