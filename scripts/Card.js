@@ -1,15 +1,14 @@
 import { openModal } from './utils.js';
 
-const deleteCardPopup = document.querySelector("#delete-card-popup");
-
 export default class Card {
-    constructor(data, cardSelector) {
-        this._name = data.name;
-        this._link = data.link;
-        this._id = data._id;
-        this._isLiked = data.isLiked;
-        this._cardSelector = cardSelector;
-    }
+    constructor(data, cardSelector, handleDeleteClick) {
+    this._name = data.name;
+    this._link = data.link;
+    this._id = data._id;
+    this._isLiked = data.isLiked;
+    this._cardSelector = cardSelector;
+    this._handleDeleteClick = handleDeleteClick;
+}
 
     _getTemplate() {
         const cardElement = document
@@ -49,7 +48,7 @@ _handleLikeIcon() {
 }
 
 _handleDeleteIcon() {
-    openModal(deleteCardPopup);
+    this._handleDeleteClick();
 }
 
     _handleOpenCardPreview() {

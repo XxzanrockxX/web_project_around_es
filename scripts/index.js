@@ -1,6 +1,7 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import { openModal, closeModal } from './utils.js';
+import PopupWithConfirmation from './PopupWithConfirmation.js';
 
 const config ={
   formSelector: '.popup__form',
@@ -26,10 +27,7 @@ const addCardPopup = document.querySelector('#new-card-popup');
 const addCardForm = document.querySelector('#new-card-form');
 const cardTitleInput = addCardForm.querySelector('.popup__input_type_card-title');
 const cardLinkInput = addCardForm.querySelector('.popup__input_type_url');
-const imagePopup = document.querySelector('#image-popup');
-const popupImage = imagePopup.querySelector('.popup__image');
-const popupCaption = imagePopup.querySelector('.popup__caption');
-const closeImagePopupButton = imagePopup.querySelector('.popup__close');
+
 
 /* === INITIALIZATION === */
 const editFormValidator = new FormValidator(config, editForm);
@@ -127,7 +125,15 @@ addCardForm.addEventListener("submit", (evt) => {
     .then((cardData) => {
       console.log(cardData);
 
-      const newCard = new Card(cardData, '#card-template');
+      const newCard = new Card(cardData, '#card-template', () => {
+  deleteCardPopup.setSubmitAction(() => {
+    console.log('Confirm delete');
+
+    deleteCardPopup.close();
+  });
+
+  deleteCardPopup.open();
+});
       const cardElement = newCard.generateCard();
 
       cardsContainer.prepend(cardElement);
@@ -143,15 +149,9 @@ addCardForm.addEventListener("submit", (evt) => {
     });
 });
 
-/** === close popup by clicking on overlay or close button === */
-const popups = document.querySelectorAll('.popup');
-popups.forEach((popup) => {
-    popup.addEventListener("mousedown", (evt) => {
-        if (evt.target.classList.contains("popup_is-opened") || evt.target.classList.contains("popup__close")) {
-            closeModal(popup);
-        }
-    });
-});
+const deleteCardPopup = new PopupWithConfirmation('#delete-card-popup');
+
+deleteCardPopup.setEventListeners();
 
 fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
   headers: {
@@ -183,7 +183,15 @@ fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
     console.log(cards);
 
     cards.forEach((cardData) => {
-      const card = new Card(cardData, '#card-template');
+      const card = new Card(cardData, '#card-template', () => {
+  deleteCardPopup.setSubmitAction(() => {
+    console.log('Confirm delete');
+
+    deleteCardPopup.close();
+  });
+
+  deleteCardPopup.open();
+});
       const cardElement = card.generateCard();
 
       cardsContainer.appendChild(cardElement);
