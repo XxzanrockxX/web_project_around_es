@@ -4,6 +4,8 @@ export default class Card {
     constructor(data, cardSelector) {
         this._name = data.name;
         this._link = data.link;
+        this._id = data._id;
+        this._isLiked = data.isLiked;
         this._cardSelector = cardSelector;
     }
 
@@ -16,9 +18,33 @@ export default class Card {
         return cardElement;
     }
 
-    _handleLikeIcon() {
-        this._element.querySelector(".card__like-button").classList.toggle("card__like-button_active");
-    }
+_handleLikeIcon() {
+    const likeButton = this._element.querySelector(".card__like-button");
+
+    const method = this._isLiked ? "DELETE" : "PUT";
+
+    fetch(`https://around-api.es.tripleten-services.com/v1/cards/${this._id}/likes`, {
+        method: method,
+        headers: {
+            authorization: "f50e0620-c232-40a3-88cb-5c484b0b47b1"
+        }
+    })
+    .then((res) => {
+        if (!res.ok) {
+            return Promise.reject(`Error: ${res.status}`);
+        }
+
+        return res.json();
+    })
+    .then((data) => {
+        this._isLiked = data.isLiked;
+
+        likeButton.classList.toggle("card__like-button_active");
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+}
 
     _handleDeleteIcon() {
         this._element.remove();
@@ -58,6 +84,12 @@ export default class Card {
             cardImage.src = this._link;
             cardImage.alt = this._name;
             this._element.querySelector(".card__title").textContent = this._name;
+
+            if (this._isLiked) {
+                this._element
+                    .querySelector(".card__like-button")
+                    .classList.add("card__like-button_active");
+}
 
             return this._element;
         }
