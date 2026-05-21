@@ -134,7 +134,25 @@
           <img alt="" class="popup__image" src="#" />
           <p class="popup__caption"></p>
         </div>
-      </div>
+      </div><div class="popup" id="delete-card-popup">
+  <div class="popup__content">
+    <button
+      aria-label="Cerrar ventana emergente"
+      class="popup__close"
+      type="button"
+    ></button>
+
+    <h3 class="popup__title">
+      ¿Estás seguro?
+    </h3>
+
+    <form class="popup__form" id="delete-card-form">
+      <button class="button popup__button" type="submit">
+        Sí
+      </button>
+    </form>
+  </div>
+</div>
     </div>
     <script src="scripts/index.js" type="module"></script>
   </body>
