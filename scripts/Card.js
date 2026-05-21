@@ -1,5 +1,7 @@
 import { openModal } from './utils.js';
 
+const deleteCardPopup = document.querySelector("#delete-card-popup");
+
 export default class Card {
     constructor(data, cardSelector) {
         this._name = data.name;
@@ -46,10 +48,9 @@ _handleLikeIcon() {
     });
 }
 
-    _handleDeleteIcon() {
-        this._element.remove();
-        this._element = null;
-    }
+_handleDeleteIcon() {
+    openModal(deleteCardPopup);
+}
 
     _handleOpenCardPreview() {
         const imagePopup = document.querySelector("#image-popup");
