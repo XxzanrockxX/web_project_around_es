@@ -1,11 +1,15 @@
 import { openModal } from './utils.js';
 
 export default class Card {
-    constructor(data, cardSelector, handleDeleteClick) {
+constructor(data, cardSelector, handleDeleteClick, currentUserId) {
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
     this._isLiked = data.isLiked;
+
+    this._ownerId = data.owner._id;
+    this._currentUserId = currentUserId;
+
     this._cardSelector = cardSelector;
     this._handleDeleteClick = handleDeleteClick;
 }
@@ -51,6 +55,11 @@ _handleDeleteIcon() {
     this._handleDeleteClick();
 }
 
+deleteCard() {
+    this._element.remove();
+    this._element = null;
+}
+
     _handleOpenCardPreview() {
         const imagePopup = document.querySelector("#image-popup");
         const popupImage = imagePopup.querySelector('.popup__image');
@@ -67,9 +76,15 @@ _handleDeleteIcon() {
         this._element.querySelector(".card__like-button").addEventListener("click", () => {
             this._handleLikeIcon();
         });
-        this._element.querySelector(".card__delete-button").addEventListener("click",() => {
-            this._handleDeleteIcon();
-        });
+        
+        const deleteButton = this._element.querySelector(".card__delete-button");
+
+if (deleteButton) {
+    deleteButton.addEventListener("click", () => {
+        this._handleDeleteIcon();
+    });
+}
+
         this._element.querySelector(".card__image").addEventListener("click",() => {
             this._handleOpenCardPreview();
         });
@@ -84,6 +99,10 @@ _handleDeleteIcon() {
             cardImage.src = this._link;
             cardImage.alt = this._name;
             this._element.querySelector(".card__title").textContent = this._name;
+                const deleteButton = this._element.querySelector(".card__delete-button");
+            if (this._ownerId !== this._currentUserId){
+                deleteButton.remove();
+                }
 
             if (this._isLiked) {
                 this._element
