@@ -152,10 +152,15 @@ editForm.addEventListener('submit', (evt) => {
     .then((data) => {
       console.log(data);
 
-      profileTitle.textContent = data.name;
-      profileDescription.textContent = data.about;
+      /* SOLO PARA PROBAR EL "GUARDANDO..." */
+      setTimeout(() => {
 
-      closeModal(editPopup);
+        profileTitle.textContent = data.name;
+        profileDescription.textContent = data.about;
+
+        closeModal(editPopup);
+
+      }, 3000);
     })
     .catch((err) => {
       console.error(err);
@@ -165,9 +170,12 @@ editForm.addEventListener('submit', (evt) => {
     });
 });
 
+
 /* === ADD CARD === */
 addCardForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
+
+  addCardSubmitButton.textContent = 'Guardando...';
 
   fetch('https://around-api.es.tripleten-services.com/v1/cards', {
     method: 'POST',
@@ -215,17 +223,15 @@ addCardForm.addEventListener('submit', (evt) => {
               })
               .catch((err) => {
                 console.error(err);
-              })
-              .finally(() => {
-                addCardSubmitButton.textContent = 'Crear';
               });
+
           });
 
           deleteCardPopup.open();
         },
 
         currentUserId
-      ); 
+      );
 
       const cardElement = newCard.generateCard();
 
@@ -239,12 +245,18 @@ addCardForm.addEventListener('submit', (evt) => {
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      addCardSubmitButton.textContent = 'Crear';
     });
 });
+
 
 /* === UPDATE AVATAR === */
 avatarForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
+
+  avatarSubmitButton.textContent = 'Guardando...';
 
   fetch('https://around-api.es.tripleten-services.com/v1/users/me/avatar', {
     method: 'PATCH',
